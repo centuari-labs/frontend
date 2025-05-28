@@ -1,3 +1,4 @@
+import { getDefaultConfig } from "@rainbow-me/rainbowkit";
 import { defineChain } from "viem";
 import { cookieStorage, createConfig, createStorage, http } from "wagmi";
 import { arbitrumSepolia } from "wagmi/chains";
@@ -18,16 +19,26 @@ const rise = defineChain({
   testnet: true,
 });
 
-export function getConfig() {
-  return createConfig({
-    chains: [arbitrumSepolia, rise],
-    ssr: true,
-    storage: createStorage({
-      storage: cookieStorage,
-    }),
-    transports: {
-      [arbitrumSepolia.id]: http(),
-      [rise.id]: http(),
+export const config = getDefaultConfig({
+  appName: "Centuari Testnet App",
+  projectId: process.env.NEXT_PUBLIC_PROJECT_ID || "123",
+  chains: [
+    {
+      ...arbitrumSepolia,
+      iconUrl:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjv1BCz9c0XJqNX7QdhdoP2Te1d5WBlHDNf6E4Ja7ELh2eCVherSXHhraFVvWYK8msubY&usqp=CAU",
     },
-  });
-}
+    {
+      ...rise,
+      iconUrl: "https://public.rootdata.com/images/b6/1726504533652.png",
+    },
+  ],
+  ssr: true,
+  storage: createStorage({
+    storage: cookieStorage,
+  }),
+  transports: {
+    [arbitrumSepolia.id]: http(),
+    [rise.id]: http(),
+  },
+});
