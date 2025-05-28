@@ -21,7 +21,7 @@ const buttonVariants = cva(
           "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
         link: "text-primary underline-offset-4 hover:underline",
         colorful:
-          "bg-gradient-to-r from-[#0C63BA] to-[#043363] text-white hover:from-[#043363] hover:to-[#0C63BA] hover:transition-all hover:duration-300 active:scale-105",
+          "bg-gradient-to-r from-[#0C63BA] to-[#043363] text-white hover:from-[#043363] hover:to-[#0C63BA] hover:transition-all hover:duration-300 active:scale-105 focus:ring-2 focus:ring-[#0C63BA]/30 ring-offset-2 ring-offset-[#0C63BA]/30",
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",
