@@ -98,8 +98,8 @@ export function Navbar() {
   const { isConnected } = useAccount();
 
   return (
-    <header className="mb-3 sticky top-0 z-50 w-full font-sans container mx-auto">
-      <div className="py-1 px-5 bg-[#020D18] backdrop-blur-2xl rounded-xl border border-[#052648]">
+    <header className="mb-3 sticky top-0 z-50 w-full font-sans">
+      <div className="py-1 px-5 bg-[#020D18] backdrop-blur-2xl border-b border-[#052648]">
         <div className="flex justify-between h-16 items-center">
           <div className="flex">
             <Link href="/" className="flex items-center space-x-2">

@@ -43,6 +43,7 @@ import {
 } from "./ui/select";
 import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 import Image from "next/image";
+import Link from "next/link";
 
 // const data: Payment = [
 //   {
@@ -216,7 +217,11 @@ export const columns: ColumnDef<DataProps>[] = [
   {
     accessorKey: "",
     header: "Action",
-    cell: ({ row }) => <Button variant={"colorful"}>View Market</Button>,
+    cell: ({ row }) => (
+      <Link href={`/market/${row.original.token}?type=lend`}>
+        <Button variant={"colorful"}>View Market</Button>
+      </Link>
+    ),
   },
 ];
 

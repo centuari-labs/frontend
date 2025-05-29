@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${urbanist.variable} antialiased bg-background min-h-screen font-sans pt-3`}
+        className={`${urbanist.variable} antialiased bg-background min-h-screen font-sans`}
       >
         <Provider>
           <Navbar />
