@@ -1,6 +1,6 @@
 import { getDefaultConfig } from "@rainbow-me/rainbowkit";
 import { defineChain } from "viem";
-import { cookieStorage, createConfig, createStorage, http } from "wagmi";
+import { cookieStorage, createStorage, http } from "wagmi";
 import { arbitrumSepolia } from "wagmi/chains";
 
 const rise = defineChain({
