@@ -15,6 +15,8 @@ import {
   Inbox,
   SendToBack,
 } from "lucide-react";
+import { motion } from "motion/react";
+import clsx from "clsx";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -53,15 +55,22 @@ const NavbarLink = ({
     <Link
       key={route.href}
       href={route.href}
-      className={cn(
-        "group flex items-center px-3 rounded-full py-2 text-sm font-medium transition-colors hover:text-foreground hover:dark:text-primary-dark",
-        isActive
-          ? "bg-gradient-to-tl from-[#0C63BA] to-[#043363] text-white font-semibold"
-          : "text-muted-foreground dark:text-neutral-300"
+      className={clsx(
+        "group relative flex items-center px-4 py-2 text-sm font-normal rounded-full"
       )}
     >
-      <Icon className="h-4 w-4 mr-2" />
-      {route.label}
+      {isActive && (
+        <motion.span
+          layoutId="bubble"
+          className="absolute inset-0 z-10 bg-gradient-to-tl from-[#0C63BA] to-[#043363] text-white"
+          style={{ borderRadius: 9999 }}
+          transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+        />
+      )}
+      <span className="z-10 flex items-center">
+        <Icon className="h-4 w-4 mr-2" />
+        {route.label}
+      </span>
     </Link>
   );
 };
