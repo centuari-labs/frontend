@@ -18,6 +18,10 @@ import OrderBook from "@/components/order-book";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { MultiSelect } from "@/components/ui/multi-select";
+import { icons } from "lucide-react";
+import { SelectMultipleCollateral } from "./_components/select-multiple-collateral";
+import { TOKEN_DATA } from "@/constants";
 
 export default function MarketDetailPage({
   params,
@@ -45,29 +49,18 @@ export default function MarketDetailPage({
               </div>
             </div>
           </div>
-          <div className="border-b flex px-6 items-center gap-2">
-            <div className="flex items-center gap-2">
-              <Select defaultValue="sol" name="sol">
-                <SelectTrigger
+          <div className="border-b px-6 w-full flex items-center">
+            <div className="flex items-center">
+              <div className="flex items-center w-full gap-2">
+                <SelectMultipleCollateral
+                  options={TOKEN_DATA as any}
+                  onValueChange={() => {}}
                   className="w-[180px] border-none !bg-background !ring-0 !active:ring-0 rounded-full"
-                  name="sol"
-                >
-                  <Label
-                    className="text-sm text-muted-foreground"
-                    htmlFor="sol"
-                  >
-                    Collateral
-                  </Label>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="bg-background">
-                  <SelectGroup>
-                    <SelectItem value="sol">SOL</SelectItem>
-                    <SelectItem value="usdc">USDC</SelectItem>
-                    <SelectItem value="usdt">USDT</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
+                  placeholder="All"
+                  variant="default"
+                  maxCount={3}
+                />
+              </div>
             </div>
             <div className="flex items-center gap-2">
               <Select defaultValue="1day" name="duration">
@@ -187,22 +180,14 @@ export default function MarketDetailPage({
                   >
                     Your Collateral
                   </Label>
-                  <div className="flex items-center mt-2 relative">
-                    <Select defaultValue="sol" name="sol">
-                      <SelectTrigger
-                        className="w-full !bg-background"
-                        name="sol"
-                      >
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent className="!bg-background ">
-                        <SelectGroup>
-                          <SelectItem value="sol">SOL</SelectItem>
-                          <SelectItem value="usdc">USDC</SelectItem>
-                          <SelectItem value="usdt">USDT</SelectItem>
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
+                  <div className="flex items-center mt-2">
+                    <SelectMultipleCollateral
+                      options={TOKEN_DATA as any}
+                      onValueChange={() => {}}
+                      placeholder=""
+                      variant="default"
+                      maxCount={3}
+                    />
                   </div>
                 </div>
                 <div className="p-4">

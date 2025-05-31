@@ -260,7 +260,7 @@ export function DataTableDemo() {
         <div className="flex items-center gap-2 relative w-full">
           <SearchIcon className="w-4 h-4 absolute left-4" />
           <Input
-            className="rounded-full px-10"
+            className="rounded-full px-10 !bg-background"
             placeholder={`Search by ${searchColumn}...`}
             value={
               (table.getColumn(searchColumn)?.getFilterValue() as string) ?? ""
@@ -271,7 +271,7 @@ export function DataTableDemo() {
           />
         </div>
         <Select value={searchColumn} onValueChange={setSearchColumn}>
-          <SelectTrigger className="w-[180px] rounded-full">
+          <SelectTrigger className="w-[180px] rounded-full !bg-background">
             <SelectValue placeholder="Search by" />
           </SelectTrigger>
           <SelectContent>
@@ -282,7 +282,7 @@ export function DataTableDemo() {
           </SelectContent>
         </Select>
         <Select>
-          <SelectTrigger className="w-[180px] rounded-full">
+          <SelectTrigger className="w-[180px] rounded-full !bg-background">
             <SelectValue placeholder="Order by" />
           </SelectTrigger>
           <SelectContent>
@@ -296,12 +296,18 @@ export function DataTableDemo() {
             </SelectGroup>
           </SelectContent>
         </Select>
-        <Tabs defaultValue="account" className="bg-background rounded-full">
-          <TabsList className="rounded-full">
-            <TabsTrigger value="account" className="rounded-full">
+        <Tabs defaultValue="account" className="!bg-background rounded-full">
+          <TabsList className="rounded-full !bg-background !text-white border">
+            <TabsTrigger
+              value="account"
+              className="rounded-full data-[state=active]:!bg-gradient-to-t data-[state=active]:from-[#0C63BA] data-[state=active]:to-[#043363] data-[state=active]:text-white"
+            >
               <LayoutDashboard />
             </TabsTrigger>
-            <TabsTrigger value="password" className="rounded-full">
+            <TabsTrigger
+              value="password"
+              className="rounded-full data-[state=active]:!bg-gradient-to-t data-[state=active]:from-[#0C63BA] data-[state=active]:to-[#043363] data-[state=active]:text-white"
+            >
               <List />
             </TabsTrigger>
           </TabsList>
