@@ -26,9 +26,9 @@ export default function MarketDetailPage({
 }) {
   return (
     <div className="px-6">
-      <div className="flex gap-4 w-full">
+      <div className="flex gap-4 w-full h-[calc(80vh-100px)] overflow-hidden">
         <Card className="card-colorful bg-background w-full flex-3 gap-0 py-0">
-          <div className="h-20 border-b flex items-center justify-between px-6">
+          <div className="border-b flex items-center justify-between py-6 px-6">
             <TokenCombobox />
             <div className="flex items-center gap-10">
               <div>
@@ -45,7 +45,7 @@ export default function MarketDetailPage({
               </div>
             </div>
           </div>
-          <div className="h-14 border-b flex px-6 items-center gap-2">
+          <div className="border-b flex px-6 items-center gap-2">
             <div className="flex items-center gap-2">
               <Select defaultValue="sol" name="sol">
                 <SelectTrigger
@@ -85,16 +85,16 @@ export default function MarketDetailPage({
                 </SelectTrigger>
                 <SelectContent className="bg-background">
                   <SelectGroup>
-                    <SelectItem value="1day">1 Day</SelectItem>
-                    <SelectItem value="1week">1 Week</SelectItem>
-                    <SelectItem value="1month">1 Month</SelectItem>
+                    <SelectItem value="1day">1 day</SelectItem>
+                    <SelectItem value="1week">1 week</SelectItem>
+                    <SelectItem value="1month">1 month</SelectItem>
                     <SelectItem value="3months">3 Months</SelectItem>
                   </SelectGroup>
                 </SelectContent>
               </Select>
             </div>
           </div>
-          <div className="flex gap-4">
+          <div className="flex gap-4 h-full">
             <div className="flex-3">
               <MarketChart />
             </div>
@@ -222,10 +222,10 @@ export default function MarketDetailPage({
                       </SelectTrigger>
                       <SelectContent className="!bg-background ">
                         <SelectGroup>
-                          <SelectItem value="1day">1 Day</SelectItem>
-                          <SelectItem value="1week">1 Week</SelectItem>
-                          <SelectItem value="1month">1 Month</SelectItem>
-                          <SelectItem value="3months">3 Months</SelectItem>
+                          <SelectItem value="1day">1 day</SelectItem>
+                          <SelectItem value="1week">1 week</SelectItem>
+                          <SelectItem value="1month">1 month</SelectItem>
+                          <SelectItem value="3months">3 months</SelectItem>
                         </SelectGroup>
                       </SelectContent>
                     </Select>
@@ -330,7 +330,7 @@ export default function MarketDetailPage({
                 </TabsTrigger>
               </TabsList>
             </div>
-            <div className="h-[500px] flex items-center justify-center w-full">
+            <div className="flex items-center justify-center w-full">
               <TabsContent
                 value="active-position"
                 className="h-[500px] flex items-center justify-center w-full"

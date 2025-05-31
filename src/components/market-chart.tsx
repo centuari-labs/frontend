@@ -26,7 +26,7 @@ export default function MarketChart() {
   const [activePeriod, setActivePeriod] = useState("1W");
 
   return (
-    <div className="w-full h-[500px] bg-background text-white p-6">
+    <div className="w-full h-[calc(100%-100px)] bg-background text-white p-6">
       {/* Header Controls */}
       <div className="flex justify-between items-center mb-8">
         <div className="flex gap-2">
@@ -72,7 +72,7 @@ export default function MarketChart() {
       </div>
 
       {/* Chart Container */}
-      <div className="h-[350px] relative">
+      <div className="h-full relative">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={data}>
             <defs>
