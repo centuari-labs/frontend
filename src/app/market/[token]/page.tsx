@@ -8,7 +8,6 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
@@ -18,16 +17,25 @@ import OrderBook from "@/components/order-book";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { MultiSelect } from "@/components/ui/multi-select";
-import { icons } from "lucide-react";
 import { SelectMultipleCollateral } from "./_components/select-multiple-collateral";
 import { TOKEN_DATA } from "@/constants";
+import { useSearchParams } from "next/navigation";
+import { FormLimitLend } from "./_components/form-limit-lend";
+import { FormLimitBorrow } from "./_components/form-limit-borrow";
+import { FormMarketLend } from "./_components/form-market-lend";
+import { FormMarketBorrow } from "./_components/form-market-borrow";
 
 export default function MarketDetailPage({
   params,
 }: {
   params: { token: string };
 }) {
+  const { token } = params;
+  const searchParams = useSearchParams();
+  const type = searchParams.get("type");
+
+  const isBorrow = type === "borrow";
+
   return (
     <div className="px-6">
       <div className="flex gap-4 w-full h-[calc(80vh-100px)] overflow-hidden">
@@ -132,154 +140,10 @@ export default function MarketDetailPage({
               </TabsTrigger>
             </TabsList>
             <TabsContent value="limit">
-              <form action="#">
-                <div className="p-4">
-                  <Label
-                    className="text-xs text-muted-foreground"
-                    htmlFor="supply"
-                  >
-                    Your Supply
-                  </Label>
-                  <div className="flex items-center mt-2 relative">
-                    <Select defaultValue="sol" name="sol">
-                      <SelectTrigger
-                        className="w-[150px] rounded-r-none border-r-0 !bg-background"
-                        name="sol"
-                      >
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent className="!bg-background ">
-                        <SelectGroup>
-                          <SelectItem value="sol">SOL</SelectItem>
-                          <SelectItem value="usdc">USDC</SelectItem>
-                          <SelectItem value="usdt">USDT</SelectItem>
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                    <Input
-                      id="supply"
-                      placeholder="0.00"
-                      className="rounded-l-none !bg-background"
-                    />
-                    <Button
-                      className="rounded-l-none absolute w-10 h-5 top-0 right-0 text-xs rounded-tr-md rounded-br-none rounded-bl-md"
-                      variant={"colorful"}
-                      size={"sm"}
-                      onClick={() => {
-                        console.log("max");
-                      }}
-                    >
-                      Max
-                    </Button>
-                  </div>
-                </div>
-                <div className="p-4">
-                  <Label
-                    className="text-xs text-muted-foreground"
-                    htmlFor="collateral"
-                  >
-                    Your Collateral
-                  </Label>
-                  <div className="flex items-center mt-2">
-                    <SelectMultipleCollateral
-                      options={TOKEN_DATA as any}
-                      onValueChange={() => {}}
-                      placeholder=""
-                      variant="default"
-                      maxCount={3}
-                    />
-                  </div>
-                </div>
-                <div className="p-4">
-                  <Label
-                    className="text-xs text-muted-foreground"
-                    htmlFor="apy"
-                  >
-                    Target APY
-                  </Label>
-                  <div className="flex items-center mt-2">
-                    <Select defaultValue="1day" name="apy">
-                      <SelectTrigger
-                        className="w-[150px] rounded-r-none border-r-0 !bg-background"
-                        name="apy"
-                      >
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent className="!bg-background ">
-                        <SelectGroup>
-                          <SelectItem value="1day">1 day</SelectItem>
-                          <SelectItem value="1week">1 week</SelectItem>
-                          <SelectItem value="1month">1 month</SelectItem>
-                          <SelectItem value="3months">3 months</SelectItem>
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                    <Input
-                      id="supply"
-                      placeholder="0.00"
-                      className="rounded-l-none !bg-background text-lg"
-                    />
-                  </div>
-                  <Button
-                    variant={"colorful"}
-                    size={"lg"}
-                    className="w-full mt-12"
-                  >
-                    Place Order
-                  </Button>
-                </div>
-              </form>
+              {isBorrow ? <FormLimitBorrow /> : <FormLimitLend />}
             </TabsContent>
             <TabsContent value="market">
-              <form action="#">
-                <div className="p-4">
-                  <Label
-                    className="text-xs text-muted-foreground"
-                    htmlFor="supply"
-                  >
-                    Your Supply
-                  </Label>
-                  <div className="flex items-center mt-2 relative">
-                    <Select defaultValue="sol" name="sol">
-                      <SelectTrigger
-                        className="w-[150px] rounded-r-none border-r-0 !bg-background"
-                        name="sol"
-                      >
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent className="!bg-background ">
-                        <SelectGroup>
-                          <SelectItem value="sol">SOL</SelectItem>
-                          <SelectItem value="usdc">USDC</SelectItem>
-                          <SelectItem value="usdt">USDT</SelectItem>
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                    <Input
-                      id="supply"
-                      placeholder="0.00"
-                      className="rounded-l-none !bg-background"
-                    />
-                    <Button
-                      className="rounded-l-none absolute w-10 h-5 top-0 right-0 text-xs rounded-tr-md rounded-br-none rounded-bl-md"
-                      variant={"colorful"}
-                      size={"sm"}
-                      onClick={() => {
-                        console.log("max");
-                      }}
-                    >
-                      Max
-                    </Button>
-                  </div>
-                  <Button
-                    variant={"colorful"}
-                    size={"lg"}
-                    className="w-full mt-12"
-                  >
-                    Place Order
-                  </Button>
-                </div>
-              </form>
+              {isBorrow ? <FormMarketBorrow /> : <FormMarketLend />}
             </TabsContent>
           </Tabs>
         </Card>

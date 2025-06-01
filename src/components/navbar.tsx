@@ -2,14 +2,12 @@
 
 import { ForwardRefExoticComponent, RefAttributes, useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import {
   Home,
-  BarChart2,
   Wallet,
   Menu,
   X,
-  Droplets,
   LucideProps,
   Vault,
   Inbox,
@@ -125,9 +123,13 @@ export function Navbar() {
             {/* Desktop Navigation */}
             <nav className="hidden md:flex md:flex-1 md:items-center md:justify-center md:space-x-1 ml-12">
               {routes.map((route) => {
+                const searchParams = useSearchParams();
+                const type = searchParams.get("type");
+
                 const isActive =
                   pathname === route.href ||
-                  pathname.startsWith(`${route.href}/`);
+                  (route.href === "/lend" && type === "lend") ||
+                  (route.href === "/borrow" && type === "borrow");
 
                 if (route.private && !isConnected) return null;
 
