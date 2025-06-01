@@ -18,29 +18,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-
-const frameworks = [
-  {
-    value: "next.js",
-    label: "Next.js",
-  },
-  {
-    value: "sveltekit",
-    label: "SvelteKit",
-  },
-  {
-    value: "nuxt.js",
-    label: "Nuxt.js",
-  },
-  {
-    value: "remix",
-    label: "Remix",
-  },
-  {
-    value: "astro",
-    label: "Astro",
-  },
-];
+import { TOKEN_DATA } from "@/constants";
+import Image from "next/image";
 
 export function TokenCombobox() {
   const [open, setOpen] = React.useState(false);
@@ -55,9 +34,20 @@ export function TokenCombobox() {
           aria-expanded={open}
           className="w-[200px] h-12 text-lg rounded-full justify-between !bg-background"
         >
-          {value
-            ? frameworks.find((framework) => framework.value === value)?.label
-            : "SOL"}
+          <div className="flex items-center gap-2">
+            <Image
+              src={
+                TOKEN_DATA.find((data) => data.value === value)?.icon ||
+                TOKEN_DATA[0]?.icon
+              }
+              alt={TOKEN_DATA.find((data) => data.value === value)?.label || ""}
+              width={20}
+              height={20}
+            />
+            {value
+              ? TOKEN_DATA.find((data) => data.value === value)?.label
+              : TOKEN_DATA[0]?.label}
+          </div>
           <ChevronsUpDown className="opacity-50" />
         </Button>
       </PopoverTrigger>
@@ -71,17 +61,25 @@ export function TokenCombobox() {
                 <p className="text-sm text-foreground font-bold">Token</p>
                 <p className="text-sm text-foreground font-bold">APY</p>
               </div>
-              {frameworks.map((framework) => (
+              {TOKEN_DATA.map((data) => (
                 <CommandItem
-                  key={framework.value}
-                  value={framework.value}
+                  key={data.value}
+                  value={data.value}
                   onSelect={(currentValue) => {
                     setValue(currentValue === value ? "" : currentValue);
                     setOpen(false);
                   }}
                 >
                   <div className="flex justify-between w-full">
-                    <p className="text-sm text-foreground">{framework.label}</p>
+                    <div className="flex items-center gap-2">
+                      <Image
+                        src={data.icon}
+                        alt={data.label}
+                        width={20}
+                        height={20}
+                      />
+                      <p className="text-sm text-foreground">{data.label}</p>
+                    </div>
                     <p className="text-sm text-foreground">10%</p>
                   </div>
                   {/* <Check

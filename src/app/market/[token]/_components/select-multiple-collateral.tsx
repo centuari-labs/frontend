@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import {
@@ -225,8 +227,8 @@ export const SelectMultipleCollateral = React.forwardRef<
                             <Image
                               src={optionIcon || ""}
                               alt={option?.label || ""}
-                              width={24}
-                              height={24}
+                              width={20}
+                              height={20}
                               className={cn(
                                 isAnimating ? "animate-bounce" : "",
                                 SelectMultipleCollateralVariants({ variant }),
