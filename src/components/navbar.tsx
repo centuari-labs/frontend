@@ -12,6 +12,7 @@ import {
   Vault,
   Inbox,
   SendToBack,
+  LayoutDashboard,
 } from "lucide-react";
 import { motion } from "motion/react";
 import clsx from "clsx";
@@ -41,7 +42,7 @@ interface INavbarLink {
 }
 
 const routes: INavbarLink[] = [
-  { href: "/", label: "Home", icon: Home },
+  { href: "/", label: "Dashboard", icon: LayoutDashboard },
   { href: "/lend", label: "Lend", icon: SendToBack },
   { href: "/borrow", label: "Borrow", icon: Inbox },
   // { href: "/vaults", label: "Vaults", icon: Vault },

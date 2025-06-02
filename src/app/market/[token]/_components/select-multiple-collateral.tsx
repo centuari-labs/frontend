@@ -218,11 +218,11 @@ export const SelectMultipleCollateral = React.forwardRef<
                       selectedValues.length > 1 ? "-space-x-2" : "space-x-2"
                     )}
                   >
-                    {selectedValues.slice(0, maxCount).map((value) => {
+                    {selectedValues.slice(0, maxCount).map((value, index) => {
                       const option = options.find((o) => o.value === value);
                       const optionIcon = option?.icon;
                       return (
-                        <>
+                        <div key={index}>
                           {optionIcon && (
                             <Image
                               src={optionIcon || ""}
@@ -242,7 +242,7 @@ export const SelectMultipleCollateral = React.forwardRef<
                               {option?.label}
                             </span>
                           )}
-                        </>
+                        </div>
                       );
                     })}
                     {selectedValues.length > maxCount && (
