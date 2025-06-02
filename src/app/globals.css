@@ -136,4 +136,9 @@
     background: radial-gradient(circle, #0c63ba, #043363);
     opacity: 1;
   }
+
+  .text-default {
+    font-size: 1rem;
+    line-height: calc(1.75 / 1);
+  }
 }

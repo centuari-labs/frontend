@@ -24,11 +24,11 @@ export default function LendPage() {
             <div className="flex items-center gap-10">
               <div>
                 <p className="text-sm text-muted-foreground">Borrowed</p>
-                <h1 className="text-2xl font-bold">$100,000 MUSDC</h1>
+                <h1 className="text-xl font-bold">$100,000 MUSDC</h1>
               </div>
               <div>
                 <p className="text-sm text-muted-foreground">Supplied</p>
-                <h1 className="text-2xl font-bold">$100,000 MUSDC</h1>
+                <h1 className="text-xl font-bold">$100,000 MUSDC</h1>
               </div>
             </div>
           </div>

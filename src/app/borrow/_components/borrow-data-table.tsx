@@ -82,6 +82,7 @@ const LendData: any = [
   {
     id: 1,
     token: "SOL",
+    tokenName: "Solana",
     tokenIcon:
       "https://assets.coingecko.com/coins/images/4128/large/solana.png?1640133422",
     supplied: 100,
@@ -93,6 +94,7 @@ const LendData: any = [
   {
     id: 2,
     token: "USDC",
+    tokenName: "USDC",
     tokenIcon:
       "https://assets.coingecko.com/coins/images/6319/large/USD_Coin_icon.png?1547042194",
     supplied: 100,
@@ -104,6 +106,7 @@ const LendData: any = [
   {
     id: 3,
     token: "USDT",
+    tokenName: "USDT",
     tokenIcon:
       "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501580",
     supplied: 100,
@@ -115,6 +118,7 @@ const LendData: any = [
   {
     id: 4,
     token: "USDC",
+    tokenName: "USDC",
     tokenIcon:
       "https://assets.coingecko.com/coins/images/6319/large/USD_Coin_icon.png?1547042194",
     supplied: 100,
@@ -128,6 +132,7 @@ const LendData: any = [
 export type DataProps = {
   id: number;
   token: string;
+  tokenName: string;
   tokenIcon: string;
   supplied: number;
   lltv: string;
@@ -142,12 +147,16 @@ export const columns: ColumnDef<DataProps>[] = [
     header: "Token",
     cell: ({ row }) => {
       const token = row.getValue("token");
+      const tokenName = row.original.tokenName;
       const tokenIcon = row.original.tokenIcon; // safer & correct way to access full row data
 
       return (
-        <div className="capitalize w-[200px] flex font-bold items-center gap-2">
-          <Image src={tokenIcon} alt={String(token)} width={20} height={20} />
-          {String(token)}
+        <div className="capitalize flex items-center gap-2">
+          <Image src={tokenIcon} alt={String(token)} width={28} height={28} />
+          <div className="flex flex-col">
+            <p className="font-bold text-default">{String(token)}</p>
+            <p className="text-xs text-muted-foreground">{tokenName}</p>
+          </div>
         </div>
       );
     },

@@ -82,6 +82,7 @@ const LendData: any = [
   {
     id: 1,
     token: "SOL",
+    tokenName: "Solana",
     tokenIcon:
       "https://assets.coingecko.com/coins/images/4128/large/solana.png?1640133422",
     supplied: 100,
@@ -93,6 +94,7 @@ const LendData: any = [
   {
     id: 2,
     token: "USDC",
+    tokenName: "USDC",
     tokenIcon:
       "https://assets.coingecko.com/coins/images/6319/large/USD_Coin_icon.png?1547042194",
     supplied: 100,
@@ -104,6 +106,7 @@ const LendData: any = [
   {
     id: 3,
     token: "USDT",
+    tokenName: "USDT",
     tokenIcon:
       "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501580",
     supplied: 100,
@@ -115,6 +118,7 @@ const LendData: any = [
   {
     id: 4,
     token: "USDC",
+    tokenName: "USDC",
     tokenIcon:
       "https://assets.coingecko.com/coins/images/6319/large/USD_Coin_icon.png?1547042194",
     supplied: 100,
@@ -128,6 +132,7 @@ const LendData: any = [
 export type DataProps = {
   id: number;
   token: string;
+  tokenName: string;
   tokenIcon: string;
   supplied: number;
   lltv: string;
@@ -142,12 +147,16 @@ export const columns: ColumnDef<DataProps>[] = [
     header: "Token",
     cell: ({ row }) => {
       const token = row.getValue("token");
+      const tokenName = row.original.tokenName;
       const tokenIcon = row.original.tokenIcon; // safer & correct way to access full row data
 
       return (
-        <div className="capitalize w-[200px] flex font-bold items-center gap-2">
-          <Image src={tokenIcon} alt={String(token)} width={20} height={20} />
-          {String(token)}
+        <div className="capitalize flex items-center gap-2">
+          <Image src={tokenIcon} alt={String(token)} width={28} height={28} />
+          <div className="flex flex-col">
+            <p className="font-bold text-default">{String(token)}</p>
+            <p className="text-xs text-muted-foreground">{tokenName}</p>
+          </div>
         </div>
       );
     },
@@ -218,7 +227,7 @@ export const columns: ColumnDef<DataProps>[] = [
     accessorKey: "",
     header: "Action",
     cell: ({ row }) => (
-      <Link href={`/market/${row.original.token}?type=lend`}>
+      <Link href={`/market/${row.original.token}?type=borrow`}>
         <Button variant={"colorful"}>View Market</Button>
       </Link>
     ),
@@ -233,7 +242,7 @@ export function LendDataTable() {
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
-  const [searchColumn, setSearchColumn] = React.useState("token");
+  const [globalFilter, setGlobalFilter] = React.useState("");
 
   const table = useReactTable({
     data: LendData,
@@ -246,11 +255,23 @@ export function LendDataTable() {
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
+    filterFns: {
+      customSearch: (row, columnId, filterValue) => {
+        const searchValue = String(filterValue).toLowerCase();
+        const token = String(row.getValue("token")).toLowerCase();
+        const tokenName = String(row.original.tokenName).toLowerCase();
+
+        return token.includes(searchValue) || tokenName.includes(searchValue);
+      },
+    },
+    globalFilterFn: "customSearch" as any,
+    onGlobalFilterChange: setGlobalFilter,
     state: {
       sorting,
       columnFilters,
       columnVisibility,
       rowSelection,
+      globalFilter,
     },
   });
 
@@ -261,26 +282,11 @@ export function LendDataTable() {
           <SearchIcon className="w-4 h-4 absolute left-4" />
           <Input
             className="rounded-full px-10 !bg-background"
-            placeholder={`Search by ${searchColumn}...`}
-            value={
-              (table.getColumn(searchColumn)?.getFilterValue() as string) ?? ""
-            }
-            onChange={(event) =>
-              table.getColumn(searchColumn)?.setFilterValue(event.target.value)
-            }
+            placeholder="Search by token or token name..."
+            value={globalFilter ?? ""}
+            onChange={(event) => setGlobalFilter(event.target.value)}
           />
         </div>
-        <Select value={searchColumn} onValueChange={setSearchColumn}>
-          <SelectTrigger className="w-[180px] rounded-full !bg-background">
-            <SelectValue placeholder="Search by" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectLabel>Search by</SelectLabel>
-              <SelectItem value="token">Token</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
         <Select>
           <SelectTrigger className="w-[180px] rounded-full !bg-background">
             <SelectValue placeholder="Order by" />

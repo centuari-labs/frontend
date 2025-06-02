@@ -44,7 +44,7 @@ const routes: INavbarLink[] = [
   { href: "/", label: "Home", icon: Home },
   { href: "/lend", label: "Lend", icon: SendToBack },
   { href: "/borrow", label: "Borrow", icon: Inbox },
-  { href: "/vaults", label: "Vaults", icon: Vault },
+  // { href: "/vaults", label: "Vaults", icon: Vault },
   { href: "/my-positions", label: "My Positions", icon: Wallet, private: true },
 ];
 
