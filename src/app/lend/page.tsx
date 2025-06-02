@@ -1,7 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Metadata } from "next";
 import React from "react";
-import { BorrowDataTable } from "../borrow/_components/borrow-data-table";
+
 import { LendDataTable } from "../borrow/_components/lend-data-table";
 
 export const metadata: Metadata = {
