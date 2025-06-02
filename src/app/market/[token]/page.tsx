@@ -30,7 +30,6 @@ export default function MarketDetailPage({
 }: {
   params: { token: string };
 }) {
-  const { token } = params;
   const searchParams = useSearchParams();
   const type = searchParams.get("type");
 

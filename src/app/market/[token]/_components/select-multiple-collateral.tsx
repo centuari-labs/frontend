@@ -283,7 +283,7 @@ export const SelectMultipleCollateral = React.forwardRef<
           align="start"
           onEscapeKeyDown={() => setIsPopoverOpen(false)}
         >
-          <Command>
+          <Command className="bg-background">
             <CommandInput
               placeholder="Search..."
               onKeyDown={handleInputKeyDown}
@@ -294,7 +294,7 @@ export const SelectMultipleCollateral = React.forwardRef<
                 <CommandItem
                   key="all"
                   onSelect={toggleAll}
-                  className="cursor-pointer"
+                  className="cursor-pointer hover:!bg-[#0C63BA]/20 data-[selected=true]:!bg-[#0C63BA]/20"
                 >
                   <div
                     className={cn(
@@ -314,7 +314,7 @@ export const SelectMultipleCollateral = React.forwardRef<
                     <CommandItem
                       key={option.value}
                       onSelect={() => toggleOption(option.value)}
-                      className="cursor-pointer"
+                      className="cursor-pointer hover:!bg-[#0C63BA]/20 data-[selected=true]:!bg-[#0C63BA]/20"
                     >
                       <div
                         className={cn(
@@ -360,7 +360,7 @@ export const SelectMultipleCollateral = React.forwardRef<
                   )}
                   <CommandItem
                     onSelect={() => setIsPopoverOpen(false)}
-                    className="flex-1 justify-center cursor-pointer max-w-full"
+                    className="flex-1 justify-center cursor-pointer max-w-full hover:!bg-[#0C63BA]/20 data-[selected=true]:!bg-[#0C63BA]/20"
                   >
                     Close
                   </CommandItem>

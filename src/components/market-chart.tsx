@@ -35,7 +35,7 @@ export default function MarketChart() {
             onClick={() => setActiveView("rate-history")}
             className={`rounded-full px-6 py-2 text-sm font-medium transition-all ${
               activeView === "rate-history"
-                ? "bg-gray-700 text-white border-gray-600"
+                ? "bg-gradient-to-b from-[#043363] to-[#043363] font-bold text-white"
                 : "bg-transparent text-gray-400 border-gray-600 hover:text-white hover:border-gray-500"
             }`}
           >
@@ -44,9 +44,9 @@ export default function MarketChart() {
           <Button
             variant={activeView === "yield-curve" ? "default" : "outline"}
             onClick={() => setActiveView("yield-curve")}
-            className={`rounded-full px-6 py-2 text-sm font-medium transition-all ${
+            className={`rounded-full px-6 py-2 text-sm font-medium transition-all hover:bg-[#0C63BA]/20 ${
               activeView === "yield-curve"
-                ? "bg-gray-700 text-white border-gray-600"
+                ? "bg-gradient-to-b from-[#043363] to-[#043363] font-bold text-white"
                 : "bg-transparent text-gray-400 border-gray-600 hover:text-white hover:border-gray-500"
             }`}
           >

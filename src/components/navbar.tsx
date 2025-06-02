@@ -18,10 +18,18 @@ import clsx from "clsx";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import { useAccount } from "wagmi";
+import { CustomConnectButton } from "./custom-connect-button";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 interface INavbarLink {
   href: string;
@@ -162,7 +170,7 @@ export function Navbar() {
 
           {/* Connect Wallet Button */}
           <div className="hidden md:flex items-center space-x-2">
-            <ConnectButton />
+            <CustomConnectButton />
             {/* <div>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>

@@ -53,9 +53,9 @@ export function TokenCombobox() {
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0">
         <Command className="bg-background">
-          <CommandInput placeholder="Search framework..." />
+          <CommandInput placeholder="Search token..." />
           <CommandList>
-            <CommandEmpty>No framework found.</CommandEmpty>
+            <CommandEmpty>No token found.</CommandEmpty>
             <CommandGroup>
               <div className="flex items-center justify-between my-2 px-1">
                 <p className="text-sm text-foreground font-bold">Token</p>
