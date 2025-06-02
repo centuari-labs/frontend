@@ -13,14 +13,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import {
-  ArrowUpDown,
-  ChevronDown,
-  LayoutDashboard,
-  List,
-  MoreHorizontal,
-  SearchIcon,
-} from "lucide-react";
+import { ArrowUpDown, LayoutDashboard, List, SearchIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
