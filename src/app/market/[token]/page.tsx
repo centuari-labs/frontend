@@ -15,8 +15,6 @@ import { Label } from "@/components/ui/label";
 import MarketChart from "@/components/market-chart";
 import OrderBook from "@/components/order-book";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { SelectMultipleCollateral } from "./_components/select-multiple-collateral";
 import { TOKEN_DATA } from "@/constants";
 import { useSearchParams } from "next/navigation";
@@ -25,11 +23,7 @@ import { FormLimitBorrow } from "./_components/form-limit-borrow";
 import { FormMarketLend } from "./_components/form-market-lend";
 import { FormMarketBorrow } from "./_components/form-market-borrow";
 
-export default function MarketDetailPage({
-  params,
-}: {
-  params: { token: string };
-}) {
+export default function MarketDetailPage() {
   const searchParams = useSearchParams();
   const type = searchParams.get("type");
 

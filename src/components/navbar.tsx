@@ -111,6 +111,8 @@ export function Navbar() {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { isConnected } = useAccount();
+  const searchParams = useSearchParams();
+  const type = searchParams.get("type");
 
   return (
     <header className="mb-3 sticky top-0 z-50 w-full font-sans">
@@ -131,9 +133,6 @@ export function Navbar() {
             {/* Desktop Navigation */}
             <nav className="hidden md:flex md:flex-1 md:items-center md:justify-center md:space-x-1 ml-12">
               {routes.map((route) => {
-                const searchParams = useSearchParams();
-                const type = searchParams.get("type");
-
                 const isActive =
                   pathname === route.href ||
                   (route.href === "/lend" && type === "lend") ||
