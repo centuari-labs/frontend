@@ -86,7 +86,7 @@ export function TokenSelector() {
         {faucetData.map((item) => (
           <Card
             key={item.id}
-            className={`bg-background cursor-pointer transition-all duration-300 ${
+            className={`bg-background cursor-pointer transition-all duration-300 relative ${
               selectedToken.some((token) => token.id === item.id)
                 ? "bg-[#043363]/20 border-2"
                 : ""
@@ -119,6 +119,11 @@ export function TokenSelector() {
                 </div>
               </div>
             </div>
+            {selectedToken.some((token) => token.id === item.id) && (
+              <div className="absolute -top-1 -right-1 w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
+                <span className="text-white text-xs">✓</span>
+              </div>
+            )}
           </Card>
         ))}
       </CardContent>
