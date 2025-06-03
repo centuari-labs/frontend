@@ -8,6 +8,12 @@ import {
 import React from "react";
 import { TokenSelector } from "./_components/token-selector";
 import { TransactionDataTable } from "./_components/transaction-data-table";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Faucet | Centuari Testnet",
+  description: "Get free tokens for testing",
+};
 
 export default function FaucetPage() {
   return (
