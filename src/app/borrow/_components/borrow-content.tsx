@@ -107,7 +107,7 @@ export function BorrowContent() {
           <div className="flex items-center gap-2 relative w-full">
             <SearchIcon className="w-4 h-4 absolute left-4" />
             <Input
-              className="rounded-full px-10 !bg-background"
+              className="rounded-full px-10 !bg-background !py-5"
               placeholder="Search by token or token name..."
               value={
                 (table.getColumn(searchColumn)?.getFilterValue() as string) ??
@@ -121,7 +121,7 @@ export function BorrowContent() {
             />
           </div>
           <Select value={searchColumn} onValueChange={setSearchColumn}>
-            <SelectTrigger className="w-[180px] rounded-full !bg-background">
+            <SelectTrigger className="w-[180px] rounded-full !bg-background !py-5">
               <SelectValue placeholder="Search by" />
             </SelectTrigger>
             <SelectContent>
@@ -131,16 +131,16 @@ export function BorrowContent() {
               </SelectGroup>
             </SelectContent>
           </Select>
-          <TabsList className="rounded-full !bg-background !text-white border">
+          <TabsList className="rounded-full !bg-background !text-white border !py-5">
             <TabsTrigger
               value="table"
-              className="rounded-full data-[state=active]:!bg-gradient-to-t data-[state=active]:from-[#0C63BA] data-[state=active]:to-[#043363] data-[state=active]:text-white"
+              className="rounded-full data-[state=active]:!bg-gradient-to-t data-[state=active]:from-[#0C63BA] data-[state=active]:to-[#043363] data-[state=active]:text-white !py-4"
             >
               <List />
             </TabsTrigger>
             <TabsTrigger
               value="card"
-              className="rounded-full data-[state=active]:!bg-gradient-to-t data-[state=active]:from-[#0C63BA] data-[state=active]:to-[#043363] data-[state=active]:text-white"
+              className="rounded-full data-[state=active]:!bg-gradient-to-t data-[state=active]:from-[#0C63BA] data-[state=active]:to-[#043363] data-[state=active]:text-white !py-4"
             >
               <LayoutDashboard />
             </TabsTrigger>

@@ -23,9 +23,9 @@ export function BorrowCard() {
         <CardHeader className="border-b !py-6 px-0">
           <div className="flex justify-between w-full">
             <motion.div {...fadeIn} transition={{ delay: 0.2 }}>
-              <h1 className="text-2xl font-semibold">Lend Market</h1>
+              <h1 className="text-2xl font-semibold">Borrow Market</h1>
               <p className="text-sm text-muted-foreground">
-                Lend your assets to earn interest
+                Borrow assets from the market
               </p>
             </motion.div>
             <div className="flex items-center gap-10">
