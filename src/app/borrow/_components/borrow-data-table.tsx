@@ -151,7 +151,7 @@ export const columns: ColumnDef<DataProps>[] = [
       const tokenIcon = row.original.tokenIcon; // safer & correct way to access full row data
 
       return (
-        <div className="capitalize flex items-center gap-2">
+        <div className="capitalize flex items-center gap-2 w-[150px]">
           <Image src={tokenIcon} alt={String(token)} width={28} height={28} />
           <div className="flex flex-col">
             <p className="font-bold text-default">{String(token)}</p>
@@ -179,7 +179,7 @@ export const columns: ColumnDef<DataProps>[] = [
   },
   {
     accessorKey: "supplied",
-    header: () => <div className="text-right">Amount</div>,
+    header: () => <div>Supplied</div>,
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("supplied"));
 
@@ -189,12 +189,12 @@ export const columns: ColumnDef<DataProps>[] = [
         currency: "USD",
       }).format(amount);
 
-      return <div className="text-right font-medium">{formatted}</div>;
+      return <div className="font-medium">{formatted}</div>;
     },
   },
   {
     accessorKey: "borrowed",
-    header: () => <div className="text-right">Amount</div>,
+    header: () => <div>Borrowed</div>,
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("borrowed"));
 
@@ -204,7 +204,7 @@ export const columns: ColumnDef<DataProps>[] = [
         currency: "USD",
       }).format(amount);
 
-      return <div className="text-right font-medium">{formatted}</div>;
+      return <div className="font-medium">{formatted}</div>;
     },
   },
   {

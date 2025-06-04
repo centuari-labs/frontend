@@ -151,7 +151,7 @@ export const columns: ColumnDef<DataProps>[] = [
       const tokenIcon = row.original.tokenIcon; // safer & correct way to access full row data
 
       return (
-        <div className="capitalize flex items-center gap-2">
+        <div className="capitalize flex items-center gap-2 w-[150px]">
           <Image src={tokenIcon} alt={String(token)} width={28} height={28} />
           <div className="flex flex-col">
             <p className="font-bold text-default">{String(token)}</p>
@@ -179,7 +179,7 @@ export const columns: ColumnDef<DataProps>[] = [
   },
   {
     accessorKey: "supplied",
-    header: () => <div className="text-right">Amount</div>,
+    header: () => <div>Supplied</div>,
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("supplied"));
 
@@ -189,12 +189,12 @@ export const columns: ColumnDef<DataProps>[] = [
         currency: "USD",
       }).format(amount);
 
-      return <div className="text-right font-medium">{formatted}</div>;
+      return <div className="font-medium">{formatted}</div>;
     },
   },
   {
     accessorKey: "borrowed",
-    header: () => <div className="text-right">Amount</div>,
+    header: () => <div>Borrowed</div>,
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("borrowed"));
 
@@ -204,7 +204,7 @@ export const columns: ColumnDef<DataProps>[] = [
         currency: "USD",
       }).format(amount);
 
-      return <div className="text-right font-medium">{formatted}</div>;
+      return <div className="font-medium">{formatted}</div>;
     },
   },
   {
@@ -242,7 +242,7 @@ export function LendDataTable() {
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
-  const [globalFilter, setGlobalFilter] = React.useState("");
+  const [searchColumn, setSearchColumn] = React.useState("token");
 
   const table = useReactTable({
     data: LendData,
@@ -255,23 +255,11 @@ export function LendDataTable() {
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
-    filterFns: {
-      customSearch: (row, columnId, filterValue) => {
-        const searchValue = String(filterValue).toLowerCase();
-        const token = String(row.getValue("token")).toLowerCase();
-        const tokenName = String(row.original.tokenName).toLowerCase();
-
-        return token.includes(searchValue) || tokenName.includes(searchValue);
-      },
-    },
-    globalFilterFn: "customSearch" as any,
-    onGlobalFilterChange: setGlobalFilter,
     state: {
       sorting,
       columnFilters,
       columnVisibility,
       rowSelection,
-      globalFilter,
     },
   });
 
@@ -283,10 +271,25 @@ export function LendDataTable() {
           <Input
             className="rounded-full px-10 !bg-background"
             placeholder="Search by token or token name..."
-            value={globalFilter ?? ""}
-            onChange={(event) => setGlobalFilter(event.target.value)}
+            value={
+              (table.getColumn(searchColumn)?.getFilterValue() as string) ?? ""
+            }
+            onChange={(event) =>
+              table.getColumn(searchColumn)?.setFilterValue(event.target.value)
+            }
           />
         </div>
+        <Select value={searchColumn} onValueChange={setSearchColumn}>
+          <SelectTrigger className="w-[180px] rounded-full !bg-background">
+            <SelectValue placeholder="Search by" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectLabel>Search by</SelectLabel>
+              <SelectItem value="token">Token</SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
         <Select>
           <SelectTrigger className="w-[180px] rounded-full !bg-background">
             <SelectValue placeholder="Order by" />

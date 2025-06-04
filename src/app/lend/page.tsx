@@ -2,7 +2,7 @@ import { Card, CardHeader } from "@/components/ui/card";
 import { Metadata } from "next";
 import React from "react";
 
-import { LendDataTable } from "../borrow/_components/lend-data-table";
+import { LendDataTable } from "./_components/lend-data-table";
 
 export const metadata: Metadata = {
   title: "Lend Market | Centuari Testnet",
