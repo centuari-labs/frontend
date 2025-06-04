@@ -92,7 +92,7 @@ export const borrowColumns: ColumnDef<DataProps>[] = [
     accessorKey: "",
     header: "Action",
     cell: ({ row }) => (
-      <Link href={`/market/${row.original.token}?type=lend`}>
+      <Link href={`/market/${row.original.token}?type=borrow`}>
         <Button variant={"colorful"}>View Market</Button>
       </Link>
     ),

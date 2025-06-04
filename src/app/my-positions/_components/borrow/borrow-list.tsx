@@ -1,14 +1,12 @@
-import { AccordionContent } from "@/components/ui/accordion";
-import { AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import React from "react";
+"use client";
+
+import { AccordionContent, AccordionTrigger } from "@/components/ui/accordion";
+import { AnimatedAccordionItem } from "../animated-accordion-item";
 import { DataTable } from "./data-table";
 
 export function BorrowList() {
   return (
-    <AccordionItem
-      value="item-1"
-      className="!border px-5 py-2 rounded-xl bg-[#043363]/20"
-    >
+    <AnimatedAccordionItem value="item-1" index={0}>
       <AccordionTrigger className="text-start">
         <div>
           <h1 className="text-lg font-bold">Borrow</h1>
@@ -18,6 +16,6 @@ export function BorrowList() {
       <AccordionContent className="border-t pt-4 px-3">
         <DataTable />
       </AccordionContent>
-    </AccordionItem>
+    </AnimatedAccordionItem>
   );
 }

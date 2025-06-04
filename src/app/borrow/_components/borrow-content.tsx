@@ -44,7 +44,7 @@ import {
 } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { borrowColumns } from "./borrow-column-table";
-import { BorrowData, DataProps } from "./data";
+import { BorrowData } from "./data";
 import {
   Card,
   CardContent,
@@ -55,12 +55,7 @@ import {
 import Image from "next/image";
 import { Progress } from "@/components/ui/progress";
 import Link from "next/link";
-
-const fadeInUp = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.5 },
-};
+import { lendColumns } from "@/app/lend/_components/lend-column-table";
 
 const staggerContainer = {
   animate: {
@@ -68,6 +63,12 @@ const staggerContainer = {
       staggerChildren: 0.1,
     },
   },
+};
+
+const fadeIn = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  transition: { duration: 0.5 },
 };
 
 export function BorrowContent() {
@@ -147,7 +148,6 @@ export function BorrowContent() {
         </div>
         <TabsContent value="table">
           <motion.div
-            className="rounded-md"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
@@ -219,10 +219,10 @@ export function BorrowContent() {
             </Table>
           </motion.div>
           <motion.div
-            className="flex items-center justify-end space-x-2 py-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.3 }}
+            className="flex items-center justify-end space-x-2 py-4"
           >
             <div className="flex-1 text-sm text-muted-foreground">
               {table.getFilteredSelectedRowModel().rows.length} of{" "}
@@ -255,10 +255,10 @@ export function BorrowContent() {
             initial="initial"
             animate="animate"
           >
-            {BorrowData.map((item: DataProps, index) => (
+            {BorrowData.map((item, index) => (
               <motion.div
                 key={item.id}
-                variants={fadeInUp}
+                variants={fadeIn}
                 transition={{ duration: 0.3, delay: index * 0.1 }}
               >
                 <Card className="bg-[#03111f] hover:bg-[#03111f]/20 transition-all duration-300">
@@ -283,7 +283,7 @@ export function BorrowContent() {
                   <CardContent className="flex items-center justify-between">
                     <div className="flex flex-col w-full gap-2">
                       <div className="flex items-center justify-between gap-2">
-                        <p className="text-sm text-foreground">Borrow APY</p>
+                        <p className="text-sm text-foreground">Lend APY</p>
                         <p className="text-sm text-muted-foreground">
                           {item.apy}
                         </p>

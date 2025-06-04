@@ -56,18 +56,18 @@ import Image from "next/image";
 import { Progress } from "@/components/ui/progress";
 import Link from "next/link";
 
-const fadeInUp = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.5 },
-};
-
 const staggerContainer = {
   animate: {
     transition: {
       staggerChildren: 0.1,
     },
   },
+};
+
+const fadeIn = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  transition: { duration: 0.5 },
 };
 
 export function LendContent() {
@@ -147,7 +147,6 @@ export function LendContent() {
         </div>
         <TabsContent value="table">
           <motion.div
-            className="rounded-md"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
@@ -219,10 +218,10 @@ export function LendContent() {
             </Table>
           </motion.div>
           <motion.div
-            className="flex items-center justify-end space-x-2 py-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.3 }}
+            className="flex items-center justify-end space-x-2 py-4"
           >
             <div className="flex-1 text-sm text-muted-foreground">
               {table.getFilteredSelectedRowModel().rows.length} of{" "}
@@ -258,10 +257,10 @@ export function LendContent() {
             {LendData.map((item, index) => (
               <motion.div
                 key={item.id}
-                variants={fadeInUp}
+                variants={fadeIn}
                 transition={{ duration: 0.3, delay: index * 0.1 }}
               >
-                <Card className="bg-[#03111f]">
+                <Card className="bg-[#03111f] hover:bg-[#03111f]/20 transition-all duration-300">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                       <Image
