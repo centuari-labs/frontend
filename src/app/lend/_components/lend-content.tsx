@@ -21,6 +21,7 @@ import {
   MoreHorizontal,
   SearchIcon,
 } from "lucide-react";
+import { motion } from "motion/react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -54,6 +55,20 @@ import {
 import Image from "next/image";
 import { Progress } from "@/components/ui/progress";
 import Link from "next/link";
+
+const fadeInUp = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.5 },
+};
+
+const staggerContainer = {
+  animate: {
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
 
 export function LendContent() {
   const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -131,11 +146,21 @@ export function LendContent() {
           </TabsList>
         </div>
         <TabsContent value="table">
-          <div className="rounded-md">
+          <motion.div
+            className="rounded-md"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
             <Table className="w-full border-separate border-spacing-y-1">
               <TableHeader className="w-full rounded-2xl">
                 {table.getHeaderGroups().map((headerGroup) => (
-                  <TableRow key={headerGroup.id}>
+                  <motion.tr
+                    key={headerGroup.id}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5 }}
+                  >
                     {headerGroup.headers.map((header) => {
                       return (
                         <TableHead
@@ -151,18 +176,21 @@ export function LendContent() {
                         </TableHead>
                       );
                     })}
-                  </TableRow>
+                  </motion.tr>
                 ))}
               </TableHeader>
               <TableBody>
                 {table.getRowModel().rows?.length ? (
-                  table.getRowModel().rows.map((row) => (
-                    <TableRow
+                  table.getRowModel().rows.map((row, index) => (
+                    <motion.tr
                       key={row.id}
                       data-state={row.getIsSelected() && "selected"}
                       className={`transition-colors hover:bg-[#1c2436] ${
                         row.index % 2 === 0 ? "bg-[#03111f]" : "bg-[#1c2436]/50"
                       }`}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3, delay: index * 0.1 }}
                     >
                       {row.getVisibleCells().map((cell) => (
                         <TableCell
@@ -175,7 +203,7 @@ export function LendContent() {
                           )}
                         </TableCell>
                       ))}
-                    </TableRow>
+                    </motion.tr>
                   ))
                 ) : (
                   <TableRow>
@@ -189,8 +217,13 @@ export function LendContent() {
                 )}
               </TableBody>
             </Table>
-          </div>
-          <div className="flex items-center justify-end space-x-2 py-4">
+          </motion.div>
+          <motion.div
+            className="flex items-center justify-end space-x-2 py-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+          >
             <div className="flex-1 text-sm text-muted-foreground">
               {table.getFilteredSelectedRowModel().rows.length} of{" "}
               {table.getFilteredRowModel().rows.length} row(s) selected.
@@ -213,75 +246,86 @@ export function LendContent() {
                 Next
               </Button>
             </div>
-          </div>
+          </motion.div>
         </TabsContent>
         <TabsContent value="card">
-          <div className="grid grid-cols-4 gap-4">
-            {LendData.map((item) => (
-              <Card key={item.id} className="bg-[#03111f]">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Image
-                      src={item.tokenIcon}
-                      alt={item.token}
-                      width={32}
-                      height={32}
-                    />
-                    <div className="flex flex-col">
-                      <p className="text-lg text-foreground font-bold">
-                        {item.tokenName}
-                      </p>
-                      <p className="text-xs text-muted-foreground font-semibold">
-                        {item.token}
-                      </p>
+          <motion.div
+            className="grid grid-cols-4 gap-4"
+            variants={staggerContainer}
+            initial="initial"
+            animate="animate"
+          >
+            {LendData.map((item, index) => (
+              <motion.div
+                key={item.id}
+                variants={fadeInUp}
+                transition={{ duration: 0.3, delay: index * 0.1 }}
+              >
+                <Card className="bg-[#03111f]">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Image
+                        src={item.tokenIcon}
+                        alt={item.token}
+                        width={32}
+                        height={32}
+                      />
+                      <div className="flex flex-col">
+                        <p className="text-lg text-foreground font-bold">
+                          {item.tokenName}
+                        </p>
+                        <p className="text-xs text-muted-foreground font-semibold">
+                          {item.token}
+                        </p>
+                      </div>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="flex items-center justify-between">
+                    <div className="flex flex-col w-full gap-2">
+                      <div className="flex items-center justify-between gap-2">
+                        <p className="text-sm text-foreground">Lend APY</p>
+                        <p className="text-sm text-muted-foreground">
+                          {item.apy}
+                        </p>
+                      </div>
+                      <div className="flex items-center justify-between gap-2">
+                        <p className="text-sm text-foreground">Supplied</p>
+                        <p className="text-sm text-muted-foreground">
+                          {item.supplied}
+                        </p>
+                      </div>
+                      <div className="flex items-center justify-between gap-2">
+                        <p className="text-sm text-foreground">Borrowed</p>
+                        <p className="text-sm text-muted-foreground">
+                          {item.borrowed}
+                        </p>
+                      </div>
+                      <div className="flex items-center justify-between gap-2">
+                        <p className="text-sm text-foreground">LTV</p>
+                        <p className="text-sm text-green-500 font-bold">
+                          {item.lltv}%
+                        </p>
+                      </div>
+                      <Progress
+                        value={Number(item.lltv)}
+                        className="w-full mt-2"
+                      />
                     </div>
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="flex items-center justify-between">
-                  <div className="flex flex-col w-full gap-2">
-                    <div className="flex items-center justify-between gap-2">
-                      <p className="text-sm text-foreground">Lend APY</p>
-                      <p className="text-sm text-muted-foreground">
-                        {item.apy}
-                      </p>
-                    </div>
-                    <div className="flex items-center justify-between gap-2">
-                      <p className="text-sm text-foreground">Supplied</p>
-                      <p className="text-sm text-muted-foreground">
-                        {item.supplied}
-                      </p>
-                    </div>
-                    <div className="flex items-center justify-between gap-2">
-                      <p className="text-sm text-foreground">Borrowed</p>
-                      <p className="text-sm text-muted-foreground">
-                        {item.borrowed}
-                      </p>
-                    </div>
-                    <div className="flex items-center justify-between gap-2">
-                      <p className="text-sm text-foreground">LTV</p>
-                      <p className="text-sm text-green-500 font-bold">
-                        {item.lltv}%
-                      </p>
-                    </div>
-                    <Progress
-                      value={Number(item.lltv)}
-                      className="w-full mt-2"
-                    />
-                  </div>
-                </CardContent>
-                <CardFooter>
-                  <Link
-                    href={`/market/${item.token}?type=lend`}
-                    className="w-full"
-                  >
-                    <Button variant="colorful" className="w-full">
-                      View Market
-                    </Button>
-                  </Link>
-                </CardFooter>
-              </Card>
+                  </CardContent>
+                  <CardFooter>
+                    <Link
+                      href={`/market/${item.token}?type=lend`}
+                      className="w-full"
+                    >
+                      <Button variant="colorful" className="w-full">
+                        View Market
+                      </Button>
+                    </Link>
+                  </CardFooter>
+                </Card>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </TabsContent>
       </Tabs>
     </div>
