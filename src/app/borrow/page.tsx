@@ -1,7 +1,7 @@
 import { Card, CardHeader } from "@/components/ui/card";
 import { Metadata } from "next";
 import React from "react";
-import { BorrowDataTable } from "./_components/borrow-data-table";
+import { BorrowContent } from "./_components/borrow-content";
 
 export const metadata: Metadata = {
   title: "Borrow Market | Centuari Testnet",
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function BorrowPage() {
   return (
     <div className="container mx-auto">
-      <Card className="card-colorful px-6 bg-background py-0 pb-4">
+      <Card className="card-colorful px-6 bg-background py-0 pb-4 h-[calc(100vh-100px)]">
         <CardHeader className="border-b !py-6 px-0">
           <div className="flex justify-between w-full">
             <div>
@@ -33,7 +33,7 @@ export default function BorrowPage() {
           </div>
         </CardHeader>
         <div>
-          <BorrowDataTable />
+          <BorrowContent />
         </div>
       </Card>
     </div>

@@ -2,7 +2,7 @@ import { Card, CardHeader } from "@/components/ui/card";
 import { Metadata } from "next";
 import React from "react";
 
-import { LendDataTable } from "./_components/lend-data-table";
+import { LendContent } from "./_components/lend-content";
 
 export const metadata: Metadata = {
   title: "Lend Market | Centuari Testnet",
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function LendPage() {
   return (
     <div className="container mx-auto">
-      <Card className="card-colorful px-6 bg-background py-0 pb-4">
+      <Card className="card-colorful px-6 bg-background py-0 pb-4 h-[calc(100vh-100px)]">
         <CardHeader className="border-b !py-6 px-0">
           <div className="flex justify-between w-full">
             <div>
@@ -34,7 +34,7 @@ export default function LendPage() {
           </div>
         </CardHeader>
         <div>
-          <LendDataTable />
+          <LendContent />
         </div>
       </Card>
     </div>
