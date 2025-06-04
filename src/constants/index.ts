@@ -1,3 +1,5 @@
+import { FaucetDataProps } from "@/types";
+
 export const TOKEN_DATA = [
   {
     label: "SOL",
@@ -25,3 +27,102 @@ export const TOKEN_DATA = [
     icon: "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
   },
 ] as const;
+
+export const faucetData: FaucetDataProps[] = [
+  {
+    id: "usdc",
+    name: "USDC Faucet",
+    tokenName: "USDC",
+    chain: "Sepolia",
+    chainId: 5,
+    tokenIcons:
+      "https://assets.coingecko.com/coins/images/6319/large/USD_Coin_icon.png?1547042194",
+    explorer: "https://sepholia.etherscan.io",
+    faucetUrl: "https://faucet.example.com/wbtc",
+    claimLimit: 1000000,
+    address: "0x0000000000000000000000000000000000000000",
+    limitTime: "30",
+    limitTimeUnit: "minutes",
+    status: "active",
+  },
+  {
+    id: "weth",
+    name: "WETH Faucet",
+    tokenName: "WETH",
+    chain: "Sepolia",
+    address: "0x0000000000000000000000000000000000000000",
+    chainId: 5,
+    tokenIcons:
+      "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+    explorer: "https://goerli.etherscan.io",
+    faucetUrl: "https://faucet.example.com/bgb",
+    claimLimit: 1000000,
+    limitTime: "30",
+    limitTimeUnit: "minutes",
+    status: "active",
+  },
+  {
+    id: "wbtc",
+    name: "WBTC Faucet",
+    tokenName: "WBTC",
+    address: "0x0000000000000000000000000000000000000000",
+    chain: "Sepolia",
+    chainId: 5,
+    tokenIcons:
+      "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+    explorer: "https://goerli.etherscan.io",
+    faucetUrl: "https://stargatefaucet.xyz",
+    claimLimit: 1000000,
+    limitTime: "30",
+    limitTimeUnit: "minutes",
+    status: "active",
+  },
+  {
+    id: "sol",
+    name: "Solana Faucet",
+    tokenName: "SOL",
+    chain: "Goerli",
+    address: "0x0000000000000000000000000000000000000000",
+    chainId: 5,
+    tokenIcons:
+      "https://assets.coingecko.com/coins/images/4128/large/solana.png?1696501566",
+    explorer: "https://goerli.etherscan.io",
+    faucetUrl: "https://faucet.example.com/bnb",
+    claimLimit: 1000000,
+    limitTime: "30",
+    limitTimeUnit: "minutes",
+    status: "active",
+  },
+  {
+    id: "link",
+    name: "LINK Faucet",
+    tokenName: "LINK",
+    chain: "Goerli",
+    address: "0x0000000000000000000000000000000000000000",
+    chainId: 5,
+    tokenIcons:
+      "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+    explorer: "https://goerli.etherscan.io",
+    faucetUrl: "https://faucet.example.com/link",
+    claimLimit: 1000000,
+    limitTime: "30",
+    limitTimeUnit: "minutes",
+    status: "active",
+  },
+  {
+    id: "aave",
+    name: "AAVE Faucet",
+    tokenName: "AAVE",
+    chain: "Goerli",
+    chainId: 5,
+    address: "0x0000000000000000000000000000000000000000",
+    tokenIcons:
+      "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+    explorer: "https://goerli.etherscan.io",
+    faucetUrl: "https://faucet.example.com/link",
+    claimLimit: 1000000,
+    limitTime: "30",
+    limitTimeUnit: "minutes",
+    status: "active",
+  },
+];

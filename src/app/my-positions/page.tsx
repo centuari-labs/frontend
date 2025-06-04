@@ -1,4 +1,4 @@
-import { Card } from "@/components/ui/card";
+import { Card, CardHeader } from "@/components/ui/card";
 import { BorrowList } from "./_components/borrow/borrow-list";
 import { Accordion } from "@/components/ui/accordion";
 import { LendList } from "./_components/lend/lend-list";
@@ -7,7 +7,7 @@ export default function MyPositions() {
   return (
     <div className="container mx-auto">
       <Card className="card-colorful px-6 bg-background py-0 mb-4 min-h-[calc(100vh-100px)]">
-        <div className="border-b h-24 flex items-center">
+        <CardHeader className="border-b !py-6 px-0">
           <div className="flex justify-between w-full">
             <div>
               <h1 className="text-2xl font-semibold">My Positions</h1>
@@ -26,7 +26,7 @@ export default function MyPositions() {
               </div>
             </div>
           </div>
-        </div>
+        </CardHeader>
         <Accordion type="multiple" className="mb-4 flex flex-col gap-2">
           <BorrowList />
           <LendList />
