@@ -16,6 +16,7 @@ import {
 import {
   ArrowUpDown,
   ChevronDown,
+  CircleAlert,
   LayoutDashboard,
   List,
   MoreHorizontal,
@@ -55,7 +56,7 @@ import {
 import Image from "next/image";
 import { Progress } from "@/components/ui/progress";
 import Link from "next/link";
-import { lendColumns } from "@/app/lend/_components/lend-column-table";
+import { useDebounce } from "@/hooks/use-debounce";
 
 const staggerContainer = {
   animate: {
@@ -79,7 +80,9 @@ export function BorrowContent() {
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
-  const [searchColumn, setSearchColumn] = React.useState("token");
+  const [searchColumn, setSearchColumn] = React.useState("tokenName");
+  const [searchValue, setSearchValue] = React.useState("");
+  const debouncedSearchValue = useDebounce(searchValue, 300);
 
   const table = useReactTable({
     data: BorrowData,
@@ -100,6 +103,30 @@ export function BorrowContent() {
     },
   });
 
+  const filteredCardData = React.useMemo(() => {
+    if (!debouncedSearchValue) return BorrowData;
+
+    return BorrowData.filter((item) => {
+      const searchLower = debouncedSearchValue.toLowerCase();
+      const tokenMatch = item.token.toLowerCase().includes(searchLower);
+      const tokenNameMatch = item.tokenName.toLowerCase().includes(searchLower);
+
+      if (searchColumn === "tokenName") {
+        return tokenNameMatch;
+      }
+      if (searchColumn === "token") {
+        return tokenMatch;
+      }
+      return tokenMatch || tokenNameMatch;
+    });
+  }, [debouncedSearchValue, searchColumn]);
+
+  const handleReset = () => {
+    setSearchValue("");
+    setSearchColumn("token");
+    table.getColumn(searchColumn)?.setFilterValue("");
+  };
+
   return (
     <div className="w-full">
       <Tabs defaultValue="table" className="!bg-background rounded-full">
@@ -108,16 +135,15 @@ export function BorrowContent() {
             <SearchIcon className="w-4 h-4 absolute left-4" />
             <Input
               className="rounded-full px-10 !bg-background !py-5"
-              placeholder="Search by token or token name..."
-              value={
-                (table.getColumn(searchColumn)?.getFilterValue() as string) ??
-                ""
-              }
-              onChange={(event) =>
-                table
-                  .getColumn(searchColumn)
-                  ?.setFilterValue(event.target.value)
-              }
+              placeholder={`Search by ${
+                searchColumn === "tokenName" ? "token name" : "token symbol"
+              }...`}
+              value={searchValue}
+              onChange={(event) => {
+                const newValue = event.target.value;
+                setSearchValue(newValue);
+                table.getColumn(searchColumn)?.setFilterValue(newValue);
+              }}
             />
           </div>
           <Select value={searchColumn} onValueChange={setSearchColumn}>
@@ -127,7 +153,8 @@ export function BorrowContent() {
             <SelectContent>
               <SelectGroup>
                 <SelectLabel>Search by</SelectLabel>
-                <SelectItem value="token">Token</SelectItem>
+                <SelectItem value="tokenName">Token Name</SelectItem>
+                <SelectItem value="token">Symbol</SelectItem>
               </SelectGroup>
             </SelectContent>
           </Select>
@@ -135,12 +162,14 @@ export function BorrowContent() {
             <TabsTrigger
               value="table"
               className="rounded-full data-[state=active]:!bg-gradient-to-t data-[state=active]:from-[#0C63BA] data-[state=active]:to-[#043363] data-[state=active]:text-white !py-4"
+              onClick={handleReset}
             >
               <List />
             </TabsTrigger>
             <TabsTrigger
               value="card"
               className="rounded-full data-[state=active]:!bg-gradient-to-t data-[state=active]:from-[#0C63BA] data-[state=active]:to-[#043363] data-[state=active]:text-white !py-4"
+              onClick={handleReset}
             >
               <LayoutDashboard />
             </TabsTrigger>
@@ -249,83 +278,103 @@ export function BorrowContent() {
           </motion.div>
         </TabsContent>
         <TabsContent value="card">
-          <motion.div
-            className="grid grid-cols-4 gap-4"
-            variants={staggerContainer}
-            initial="initial"
-            animate="animate"
-          >
-            {BorrowData.map((item, index) => (
-              <motion.div
-                key={item.id}
-                variants={fadeIn}
-                transition={{ duration: 0.3, delay: index * 0.1 }}
-              >
-                <Card className="bg-[#03111f] hover:bg-[#03111f]/20 transition-all duration-300">
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <Image
-                        src={item.tokenIcon}
-                        alt={item.token}
-                        width={32}
-                        height={32}
-                      />
-                      <div className="flex flex-col">
-                        <p className="text-lg text-foreground font-bold">
-                          {item.tokenName}
-                        </p>
-                        <p className="text-xs text-muted-foreground font-semibold">
-                          {item.token}
-                        </p>
+          {filteredCardData.length > 0 ? (
+            <motion.div
+              className="grid grid-cols-4 gap-4"
+              variants={staggerContainer}
+              initial="initial"
+              animate="animate"
+            >
+              {filteredCardData.map((item, index) => (
+                <motion.div
+                  key={item.id}
+                  variants={fadeIn}
+                  transition={{ duration: 0.3, delay: index * 0.1 }}
+                >
+                  <Card className="bg-[#03111f] hover:bg-[#03111f]/20 transition-all duration-300">
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2">
+                        <Image
+                          src={item.tokenIcon}
+                          alt={item.token}
+                          width={32}
+                          height={32}
+                        />
+                        <div className="flex flex-col">
+                          <p className="text-lg text-foreground font-bold">
+                            {item.tokenName}
+                          </p>
+                          <p className="text-xs text-muted-foreground font-semibold">
+                            {item.token}
+                          </p>
+                        </div>
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="flex items-center justify-between">
+                      <div className="flex flex-col w-full gap-2">
+                        <div className="flex items-center justify-between gap-2">
+                          <p className="text-sm text-foreground">Lend APY</p>
+                          <p className="text-sm text-muted-foreground">
+                            {item.apy}
+                          </p>
+                        </div>
+                        <div className="flex items-center justify-between gap-2">
+                          <p className="text-sm text-foreground">Supplied</p>
+                          <p className="text-sm text-muted-foreground">
+                            {item.supplied}
+                          </p>
+                        </div>
+                        <div className="flex items-center justify-between gap-2">
+                          <p className="text-sm text-foreground">Borrowed</p>
+                          <p className="text-sm text-muted-foreground">
+                            {item.borrowed}
+                          </p>
+                        </div>
+                        <div className="flex items-center justify-between gap-2">
+                          <p className="text-sm text-foreground">LTV</p>
+                          <p className="text-sm text-green-500 font-bold">
+                            {item.lltv}%
+                          </p>
+                        </div>
+                        <Progress
+                          value={Number(item.lltv)}
+                          className="w-full mt-2"
+                        />
                       </div>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="flex items-center justify-between">
-                    <div className="flex flex-col w-full gap-2">
-                      <div className="flex items-center justify-between gap-2">
-                        <p className="text-sm text-foreground">Lend APY</p>
-                        <p className="text-sm text-muted-foreground">
-                          {item.apy}
-                        </p>
-                      </div>
-                      <div className="flex items-center justify-between gap-2">
-                        <p className="text-sm text-foreground">Supplied</p>
-                        <p className="text-sm text-muted-foreground">
-                          {item.supplied}
-                        </p>
-                      </div>
-                      <div className="flex items-center justify-between gap-2">
-                        <p className="text-sm text-foreground">Borrowed</p>
-                        <p className="text-sm text-muted-foreground">
-                          {item.borrowed}
-                        </p>
-                      </div>
-                      <div className="flex items-center justify-between gap-2">
-                        <p className="text-sm text-foreground">LTV</p>
-                        <p className="text-sm text-green-500 font-bold">
-                          {item.lltv}%
-                        </p>
-                      </div>
-                      <Progress
-                        value={Number(item.lltv)}
-                        className="w-full mt-2"
-                      />
-                    </div>
-                  </CardContent>
-                  <CardFooter>
-                    <Link
-                      href={`/market/${item.token}?type=borrow`}
-                      className="w-full"
-                    >
-                      <Button variant="colorful" className="w-full">
-                        View Market
-                      </Button>
-                    </Link>
-                  </CardFooter>
-                </Card>
-              </motion.div>
-            ))}
-          </motion.div>
+                    </CardContent>
+                    <CardFooter>
+                      <Link
+                        href={`/market/${item.token}?type=borrow`}
+                        className="w-full"
+                      >
+                        <Button variant="colorful" className="w-full">
+                          View Market
+                        </Button>
+                      </Link>
+                    </CardFooter>
+                  </Card>
+                </motion.div>
+              ))}
+            </motion.div>
+          ) : (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="flex flex-col items-center justify-center w-full min-h-[400px] rounded-xl"
+            >
+              <CircleAlert
+                className="w-16 h-16 text-muted-foreground"
+                strokeWidth={1.5}
+              />
+              <h3 className="mt-4 text-xl font-semibold text-muted-foreground">
+                No tokens found
+              </h3>
+              <p className="text-sm text-muted-foreground">
+                Try adjusting your search criteria
+              </p>
+            </motion.div>
+          )}
         </TabsContent>
       </Tabs>
     </div>

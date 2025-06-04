@@ -8,23 +8,42 @@ import Link from "next/link";
 
 export const borrowColumns: ColumnDef<DataProps>[] = [
   {
-    accessorKey: "token",
+    id: "token",
+    accessorFn: (row) => ({
+      token: row.token,
+      tokenName: row.tokenName,
+      tokenIcon: row.tokenIcon,
+    }),
     header: "Token",
     cell: ({ row }) => {
-      const token = row.getValue("token");
-      const tokenName = row.original.tokenName;
-      const tokenIcon = row.original.tokenIcon; // safer & correct way to access full row data
+      const data = row.getValue("token") as {
+        token: string;
+        tokenName: string;
+        tokenIcon: string;
+      };
 
       return (
         <div className="capitalize flex items-center gap-2 w-[150px]">
-          <Image src={tokenIcon} alt={String(token)} width={28} height={28} />
+          <Image src={data.tokenIcon} alt={data.token} width={28} height={28} />
           <div className="flex flex-col">
-            <p className="font-bold text-default">{String(token)}</p>
-            <p className="text-xs text-muted-foreground">{tokenName}</p>
+            <p className="font-bold text-default">{data.token}</p>
+            <p className="text-xs text-muted-foreground">{data.tokenName}</p>
           </div>
         </div>
       );
     },
+    filterFn: (row, id, value) => {
+      const data = row.getValue(id) as { token: string; tokenName: string };
+      return (
+        data.token.toLowerCase().includes(value.toLowerCase()) ||
+        data.tokenName.toLowerCase().includes(value.toLowerCase())
+      );
+    },
+  },
+  {
+    accessorKey: "tokenName",
+    header: "Token Name",
+    cell: ({ row }) => row.getValue("tokenName"),
   },
   {
     accessorKey: "apy",
