@@ -10,11 +10,19 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "./ui/sheet";
-import { useDisconnect } from "wagmi";
+import { useAccount, useDisconnect } from "wagmi";
 
 export function CustomConnectButton() {
   const [isCopied, setIsCopied] = useState(false);
-  const { disconnect, isPending, isSuccess } = useDisconnect();
+  const { disconnect } = useDisconnect();
+  const { isConnected } = useAccount();
+
+  const handleDisconnect = () => {
+    if (isConnected) {
+      disconnect();
+      console.log("Wallet disconnected");
+    }
+  };
 
   const onCopyAddress = (address: string) => {
     navigator.clipboard.writeText(address);
@@ -159,9 +167,7 @@ export function CustomConnectButton() {
                               variant={"outline"}
                               size={"lg"}
                               className="cursor-pointer rounded-full"
-                              onClick={() => {
-                                disconnect();
-                              }}
+                              onClick={handleDisconnect}
                             >
                               <Power className="w-3 h-3" />
                             </Button>

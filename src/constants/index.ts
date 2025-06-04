@@ -1,4 +1,4 @@
-import { FaucetDataProps } from "@/types";
+import { FaucetDataProps, OpenOrdersProps, TransactionProps } from "@/types";
 
 export const TOKEN_DATA = [
   {
@@ -124,5 +124,105 @@ export const faucetData: FaucetDataProps[] = [
     limitTime: "30",
     limitTimeUnit: "minutes",
     status: "active",
+  },
+];
+
+export const OpenOrdersData: OpenOrdersProps[] = [
+  {
+    loan_token_decimal: 18,
+    loan_token_symbol: "MUSDC",
+    loan_token_address: "0x0000000000000000000000000000000000000000",
+    collateral_token_address: "0x0000000000000000000000000000000000000000",
+    matched_amount: "1000000000000000000",
+    original_amount: "1000000000000000000",
+    rate: "1000000000000000000",
+    side: "LEND",
+    status: "OPEN",
+    timestamp: "2021-01-01",
+    orderId: BigInt(1),
+    maturity: BigInt(1),
+  },
+  {
+    loan_token_decimal: 18,
+    loan_token_symbol: "MUSDC",
+    loan_token_address: "0x0000000000000000000000000000000000000000",
+    collateral_token_address: "0x0000000000000000000000000000000000000000",
+    matched_amount: "1000000000000000000",
+    original_amount: "1000000000000000000",
+    rate: "1000000000000000000",
+    side: "BORROW",
+    status: "OPEN",
+    timestamp: "2021-01-01",
+    orderId: BigInt(2),
+    maturity: BigInt(2),
+  },
+  {
+    loan_token_decimal: 18,
+    loan_token_symbol: "MUSDC",
+    loan_token_address: "0x0000000000000000000000000000000000000000",
+    collateral_token_address: "0x0000000000000000000000000000000000000000",
+    matched_amount: "1000000000000000000",
+    original_amount: "1000000000000000000",
+    rate: "1000000000000000000",
+    side: "LEND",
+    status: "PARTIALLY_FILLED",
+    timestamp: "2021-01-01",
+    orderId: BigInt(3),
+    maturity: BigInt(3),
+  },
+];
+
+export const TransactionData: TransactionProps[] = [
+  {
+    id: 1,
+    token: "MUSDC",
+    tokenName: "MUSDC",
+    tokenIcon:
+      "https://assets.coingecko.com/coins/images/6319/large/USD_Coin_icon.png?1547042194",
+    supplied: 100,
+    lltv: "90%",
+    borrowed: 100,
+    timestamp: "2021-01-01",
+    side: "LEND",
+    txHash: "0x1234567890",
+  },
+  {
+    id: 2,
+    token: "MUSDC",
+    tokenName: "MUSDC",
+    tokenIcon:
+      "https://assets.coingecko.com/coins/images/6319/large/USD_Coin_icon.png?1547042194",
+    supplied: 100,
+    lltv: "90%",
+    borrowed: 100,
+    timestamp: "2021-01-01",
+    side: "LEND",
+    txHash: "0x1234567890",
+  },
+  {
+    id: 3,
+    token: "MUSDC",
+    tokenName: "MUSDC",
+    tokenIcon:
+      "https://assets.coingecko.com/coins/images/6319/large/USD_Coin_icon.png?1547042194",
+    supplied: 100,
+    lltv: "90%",
+    borrowed: 100,
+    timestamp: "2021-01-01",
+    side: "LEND",
+    txHash: "0x1234567890",
+  },
+  {
+    id: 4,
+    token: "MUSDC",
+    tokenName: "MUSDC",
+    tokenIcon:
+      "https://assets.coingecko.com/coins/images/6319/large/USD_Coin_icon.png?1547042194",
+    supplied: 100,
+    lltv: "90%",
+    borrowed: 100,
+    timestamp: "2021-01-01",
+    side: "BORROW",
+    txHash: "0x1234567890",
   },
 ];
