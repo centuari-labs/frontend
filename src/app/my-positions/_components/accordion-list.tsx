@@ -9,17 +9,13 @@ const fadeIn = {
   transition: { duration: 0.5 },
 };
 
-interface AnimatedAccordionItemProps {
+interface AccordionListProps {
   value: string;
   children: React.ReactNode;
   index: number;
 }
 
-export function AnimatedAccordionItem({
-  value,
-  children,
-  index,
-}: AnimatedAccordionItemProps) {
+export function AccordionList({ value, children, index }: AccordionListProps) {
   return (
     <motion.div
       variants={fadeIn}

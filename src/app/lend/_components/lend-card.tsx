@@ -19,8 +19,8 @@ const fadeIn = {
 export function LendCard() {
   return (
     <motion.div {...fadeInUp}>
-      <Card className="card-colorful px-6 bg-background py-0 pb-4 h-[calc(100vh-100px)]">
-        <CardHeader className="border-b !py-6 px-0">
+      <Card className="bg-background py-0 pb-4 h-[calc(100vh-100px)] overflow-y-auto relative">
+        <CardHeader className="border-b card-colorful !py-6 sticky top-0 z-10 bg-background/50 backdrop-blur-sm">
           <div className="flex justify-between w-full">
             <motion.div {...fadeIn} transition={{ delay: 0.2 }}>
               <h1 className="text-2xl font-semibold">Lend Market</h1>
