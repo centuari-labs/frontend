@@ -44,90 +44,9 @@ import {
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Image from "next/image";
 import Link from "next/link";
-
-// const data: Payment = [
-//   {
-//     id: "m5gr84i9",
-//     amount: 316,
-//     status: "success",
-//     email: "ken99@example.com",
-//   },
-//   {
-//     id: "3u1reuv4",
-//     amount: 242,
-//     status: "success",
-//     email: "Abe45@example.com",
-//   },
-//   {
-//     id: "derv1ws0",
-//     amount: 837,
-//     status: "processing",
-//     email: "Monserrat44@example.com",
-//   },
-//   {
-//     id: "5kma53ae",
-//     amount: 874,
-//     status: "success",
-//     email: "Silas22@example.com",
-//   },
-//   {
-//     id: "bhqecj4p",
-//     amount: 721,
-//     status: "failed",
-//     email: "carmella@example.com",
-//   },
-// ];
-
-const LendData: any = [
-  {
-    id: 1,
-    token: "SOL",
-    tokenName: "Solana",
-    tokenIcon:
-      "https://assets.coingecko.com/coins/images/4128/large/solana.png?1640133422",
-    supplied: 100,
-    lltv: "90%",
-    borrowed: 100,
-    apy: "10%",
-    volume: 100,
-  },
-  {
-    id: 2,
-    token: "USDC",
-    tokenName: "USDC",
-    tokenIcon:
-      "https://assets.coingecko.com/coins/images/6319/large/USD_Coin_icon.png?1547042194",
-    supplied: 100,
-    lltv: "90%",
-    borrowed: 100,
-    apy: "10%",
-    volume: 100,
-  },
-  {
-    id: 3,
-    token: "USDT",
-    tokenName: "USDT",
-    tokenIcon:
-      "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501580",
-    supplied: 100,
-    lltv: "90%",
-    borrowed: 100,
-    apy: "10%",
-    volume: 100,
-  },
-  {
-    id: 4,
-    token: "USDC",
-    tokenName: "USDC",
-    tokenIcon:
-      "https://assets.coingecko.com/coins/images/6319/large/USD_Coin_icon.png?1547042194",
-    supplied: 100,
-    lltv: "90%",
-    borrowed: 100,
-    apy: "10%",
-    volume: 100,
-  },
-];
+import { OpenOrdersData } from "@/constants";
+import { OpenOrdersProps } from "@/types";
+import { Badge } from "@/components/ui/badge";
 
 export type DataProps = {
   id: number;
@@ -141,28 +60,20 @@ export type DataProps = {
   volume: number;
 };
 
-export const columns: ColumnDef<DataProps>[] = [
+export const columns: ColumnDef<OpenOrdersProps>[] = [
   {
-    accessorKey: "token",
+    accessorKey: "loan_token_symbol",
     header: "Token",
     cell: ({ row }) => {
-      const token = row.getValue("token");
-      const tokenName = row.original.tokenName;
-      const tokenIcon = row.original.tokenIcon; // safer & correct way to access full row data
-
       return (
-        <div className="capitalize flex items-center gap-2">
-          <Image src={tokenIcon} alt={String(token)} width={28} height={28} />
-          <div className="flex flex-col">
-            <p className="font-bold text-default">{String(token)}</p>
-            <p className="text-xs text-muted-foreground">{tokenName}</p>
-          </div>
-        </div>
+        <p className="font-bold text-default">
+          {String(row.original.loan_token_symbol)}
+        </p>
       );
     },
   },
   {
-    accessorKey: "apy",
+    accessorKey: "rate",
     header: ({ column }) => {
       return (
         <Button
@@ -170,18 +81,18 @@ export const columns: ColumnDef<DataProps>[] = [
           className="hover:dark:bg-transparent cursor-pointer !px-0"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Lend APY
+          Rate
           <ArrowUpDown />
         </Button>
       );
     },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("apy")}</div>,
+    cell: ({ row }) => <div className="lowercase">{row.getValue("rate")}</div>,
   },
   {
-    accessorKey: "supplied",
-    header: () => <div className="text-right">Amount</div>,
+    accessorKey: "matched_amount",
+    header: () => <div>Matched Amount</div>,
     cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("supplied"));
+      const amount = parseFloat(row.getValue("matched_amount"));
 
       // Format the amount as a dollar amount
       const formatted = new Intl.NumberFormat("en-US", {
@@ -189,14 +100,14 @@ export const columns: ColumnDef<DataProps>[] = [
         currency: "USD",
       }).format(amount);
 
-      return <div className="text-right font-medium">{formatted}</div>;
+      return <div className="font-medium">{formatted}</div>;
     },
   },
   {
-    accessorKey: "borrowed",
-    header: () => <div className="text-right">Amount</div>,
+    accessorKey: "original_amount",
+    header: () => <div>Amount</div>,
     cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("borrowed"));
+      const amount = parseFloat(row.getValue("original_amount"));
 
       // Format the amount as a dollar amount
       const formatted = new Intl.NumberFormat("en-US", {
@@ -204,11 +115,11 @@ export const columns: ColumnDef<DataProps>[] = [
         currency: "USD",
       }).format(amount);
 
-      return <div className="text-right font-medium">{formatted}</div>;
+      return <div className="font-medium">{formatted}</div>;
     },
   },
   {
-    accessorKey: "lltv",
+    accessorKey: "status",
     header: ({ column }) => {
       return (
         <Button
@@ -216,25 +127,50 @@ export const columns: ColumnDef<DataProps>[] = [
           className="hover:dark:bg-transparent cursor-pointer !px-0"
           //   onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          LLTV
+          Status
           <ArrowUpDown />
         </Button>
       );
     },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("lltv")}</div>,
+    cell: ({ row }) => (
+      <Badge
+        variant={row.getValue("status") === "OPEN" ? "success" : "warning"}
+        className="capitalize"
+      >
+        {row.getValue("status")}
+      </Badge>
+    ),
   },
   {
-    accessorKey: "",
-    header: "Action",
+    accessorKey: "side",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="hover:dark:bg-transparent cursor-pointer !px-0"
+          //   onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Side
+          <ArrowUpDown />
+        </Button>
+      );
+    },
     cell: ({ row }) => (
-      <Link href={`/market/${row.original.token}?type=borrow`}>
-        <Button variant={"colorful"}>View Market</Button>
-      </Link>
+      <Badge variant="secondary" className="capitalize">
+        {row.getValue("side")}
+      </Badge>
+    ),
+  },
+  {
+    accessorKey: "timestamp",
+    header: () => <div>Timestamp</div>,
+    cell: ({ row }) => (
+      <div className="lowercase">{row.getValue("timestamp")}</div>
     ),
   },
 ];
 
-export function LendDataTable() {
+export function LendOpenOrderTable() {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -242,10 +178,10 @@ export function LendDataTable() {
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
-  const [globalFilter, setGlobalFilter] = React.useState("");
+  const [searchColumn, setSearchColumn] = React.useState("token");
 
   const table = useReactTable({
-    data: LendData,
+    data: OpenOrdersData.filter((order) => order.side === "LEND"),
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -255,69 +191,30 @@ export function LendDataTable() {
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
-    filterFns: {
-      customSearch: (row, columnId, filterValue) => {
-        const searchValue = String(filterValue).toLowerCase();
-        const token = String(row.getValue("token")).toLowerCase();
-        const tokenName = String(row.original.tokenName).toLowerCase();
-
-        return token.includes(searchValue) || tokenName.includes(searchValue);
-      },
-    },
-    globalFilterFn: "customSearch" as any,
-    onGlobalFilterChange: setGlobalFilter,
     state: {
       sorting,
       columnFilters,
       columnVisibility,
       rowSelection,
-      globalFilter,
     },
   });
 
   return (
     <div className="w-full">
-      <div className="flex items-center gap-2 mb-4">
+      <div className="flex items-center gap-2 my-4">
         <div className="flex items-center gap-2 relative w-full">
           <SearchIcon className="w-4 h-4 absolute left-4" />
           <Input
             className="rounded-full px-10 !bg-background"
-            placeholder="Search by token or token name..."
-            value={globalFilter ?? ""}
-            onChange={(event) => setGlobalFilter(event.target.value)}
+            placeholder={`Search by ${searchColumn}...`}
+            value={
+              (table.getColumn(searchColumn)?.getFilterValue() as string) ?? ""
+            }
+            onChange={(event) =>
+              table.getColumn(searchColumn)?.setFilterValue(event.target.value)
+            }
           />
         </div>
-        <Select>
-          <SelectTrigger className="w-[180px] rounded-full !bg-background">
-            <SelectValue placeholder="Order by" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectLabel>Fruits</SelectLabel>
-              <SelectItem value="apple">Apple</SelectItem>
-              <SelectItem value="banana">Banana</SelectItem>
-              <SelectItem value="blueberry">Blueberry</SelectItem>
-              <SelectItem value="grapes">Grapes</SelectItem>
-              <SelectItem value="pineapple">Pineapple</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-        <Tabs defaultValue="account" className="!bg-background rounded-full">
-          <TabsList className="rounded-full !bg-background !text-white border">
-            <TabsTrigger
-              value="account"
-              className="rounded-full data-[state=active]:!bg-gradient-to-t data-[state=active]:from-[#0C63BA] data-[state=active]:to-[#043363] data-[state=active]:text-white"
-            >
-              <LayoutDashboard />
-            </TabsTrigger>
-            <TabsTrigger
-              value="password"
-              className="rounded-full data-[state=active]:!bg-gradient-to-t data-[state=active]:from-[#0C63BA] data-[state=active]:to-[#043363] data-[state=active]:text-white"
-            >
-              <List />
-            </TabsTrigger>
-          </TabsList>
-        </Tabs>
       </div>
       <div className="rounded-md">
         <Table className="w-full border-separate border-spacing-y-1">
@@ -355,7 +252,7 @@ export function LendDataTable() {
                   {row.getVisibleCells().map((cell) => (
                     <TableCell
                       key={cell.id}
-                      className="py-6 px-8 first:rounded-l-sm last:rounded-r-sm"
+                      className="py-2 px-8 first:rounded-l-sm last:rounded-r-sm"
                     >
                       {flexRender(
                         cell.column.columnDef.cell,

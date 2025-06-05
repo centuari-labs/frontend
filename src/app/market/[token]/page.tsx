@@ -22,6 +22,12 @@ import { FormLimitLend } from "./_components/form-limit-lend";
 import { FormLimitBorrow } from "./_components/form-limit-borrow";
 import { FormMarketLend } from "./_components/form-market-lend";
 import { FormMarketBorrow } from "./_components/form-market-borrow";
+import { LendDataTable } from "./_components/active-position/lend-data-table";
+import { LendOpenOrderTable } from "./_components/open-orders/lend-open-order-table";
+import { LendTransactionTable } from "./_components/transaction/lend-transaction-table";
+import { BorrowDataTable } from "./_components/active-position/borrow-data-table";
+import { BorrowOpenOrderTable } from "./_components/open-orders/borrow-open-order-table";
+import { BorrowTransactionTable } from "./_components/transaction/borrow-transaction-table";
 
 export default function MarketDetailPage() {
   const searchParams = useSearchParams();
@@ -158,12 +164,12 @@ export default function MarketDetailPage() {
                 >
                   Open Orders
                 </TabsTrigger>
-                <TabsTrigger
+                {/* <TabsTrigger
                   value="order-history"
                   className="rounded-full py-4 dark:data-[state=active]:bg-gradient-to-b dark:data-[state=active]:from-[#043363] dark:data-[state=active]:to-[#043363] dark:data-[state=active]:font-bold w-[150px]"
                 >
                   Order History
-                </TabsTrigger>
+                </TabsTrigger> */}
                 <TabsTrigger
                   value="my-transactions"
                   className="rounded-full py-4 dark:data-[state=active]:bg-gradient-to-b dark:data-[state=active]:from-[#043363] dark:data-[state=active]:to-[#043363] dark:data-[state=active]:font-bold w-[150px]"
@@ -175,27 +181,31 @@ export default function MarketDetailPage() {
             <div className="flex items-center justify-center w-full">
               <TabsContent
                 value="active-position"
-                className="h-[500px] flex items-center justify-center w-full"
+                className="flex items-center justify-center w-full"
               >
-                <p>Active Position</p>
+                {isBorrow ? <BorrowDataTable /> : <LendDataTable />}
               </TabsContent>
               <TabsContent
                 value="open-orders"
-                className="h-[500px] flex items-center justify-center w-full"
+                className="flex items-center justify-center w-full"
               >
-                <p>Open Orders</p>
+                {isBorrow ? <BorrowOpenOrderTable /> : <LendOpenOrderTable />}
               </TabsContent>
-              <TabsContent
+              {/* <TabsContent
                 value="order-history"
-                className="h-[500px] flex items-center justify-center w-full"
+                className="flex items-center justify-center w-full"
               >
                 <p>Order History</p>
-              </TabsContent>
+              </TabsContent> */}
               <TabsContent
                 value="my-transactions"
-                className="h-[500px] flex items-center justify-center w-full"
+                className="flex items-center justify-center w-full"
               >
-                <p>My Transactions</p>
+                {isBorrow ? (
+                  <BorrowTransactionTable />
+                ) : (
+                  <LendTransactionTable />
+                )}
               </TabsContent>
             </div>
           </Tabs>
