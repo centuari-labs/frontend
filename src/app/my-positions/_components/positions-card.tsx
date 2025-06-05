@@ -16,18 +16,16 @@ const fadeIn = {
   transition: { duration: 0.5 },
 };
 
-interface AnimatedPositionsCardProps {
+interface PositionsCardProps {
   children: React.ReactNode;
 }
 
-export function AnimatedPositionsCard({
-  children,
-}: AnimatedPositionsCardProps) {
+export function PositionsCard({ children }: PositionsCardProps) {
   return (
     <motion.div {...fadeInUp}>
-      <Card className="card-colorful px-6 bg-background py-0 mb-4 min-h-[calc(100vh-100px)]">
-        <CardHeader className="border-b !py-6 px-0">
-          <div className="flex justify-between w-full">
+      <Card className="card-colorful bg-background py-0 mb-4 h-[calc(100vh-100px)] overflow-y-auto relative">
+        <CardHeader className="border-b card-colorful !py-6 px-0 sticky top-0 z-10 bg-background/50 backdrop-blur-sm">
+          <div className="flex justify-between w-full px-6">
             <motion.div {...fadeIn} transition={{ delay: 0.2 }}>
               <h1 className="text-2xl font-semibold">My Positions</h1>
               <p className="text-sm text-muted-foreground">
@@ -47,7 +45,7 @@ export function AnimatedPositionsCard({
           </div>
         </CardHeader>
         <motion.div {...fadeIn} transition={{ delay: 0.5 }}>
-          <Accordion type="multiple" className="mb-4 flex flex-col gap-2">
+          <Accordion type="multiple" className="mb-4 flex flex-col gap-2 px-6">
             {children}
           </Accordion>
         </motion.div>

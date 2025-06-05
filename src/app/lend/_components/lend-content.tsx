@@ -128,7 +128,7 @@ export function LendContent() {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full px-6">
       <Tabs defaultValue="table" className="!bg-background rounded-full">
         <div className="flex items-center gap-2 mb-4 w-full">
           <div className="flex items-center gap-2 relative w-full">

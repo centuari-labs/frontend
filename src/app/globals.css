@@ -123,7 +123,7 @@
 
 @layer components {
   .card-colorful {
-    @apply relative overflow-hidden border border-border dark:border-0 bg-card shadow-md;
+    @apply relative border border-border dark:border-0 bg-card shadow-md;
   }
 
   .card-colorful::before {
@@ -140,5 +140,32 @@
   .text-default {
     font-size: 1rem;
     line-height: calc(1.75 / 1);
+  }
+
+  /* Custom Scrollbar Styles */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background-color: transparent;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: oklch(26.68% 0.073 252.79 / 0.1);
+    border-radius: 100px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: radial-gradient(circle, #0c63ba, #043363);
+    border-radius: 100px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: radial-gradient(circle, #0c63ba, #043363);
+  }
+
+  /* Firefox Scrollbar */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #0c63ba oklch(26.68% 0.073 252.79 / 0.1);
   }
 }
